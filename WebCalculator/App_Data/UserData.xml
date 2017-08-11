@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Users>
-  <User>
+<User>
   <UserId>1</UserId>
   <UserName>Test</UserName>
   <Password>testuser</Password>
@@ -8,4 +8,12 @@
   <LastName>User</LastName>
   <Email>testuser@senonder.com</Email>
 </User>
+  <User>
+    <UserId>1</UserId>
+    <UserName>Test2</UserName>
+    <Password>testuser2</Password>
+    <FirstName>Test2</FirstName>
+    <LastName>User2</LastName>
+    <Email>testuser2@senonder.com</Email>
+  </User>
 </Users>
