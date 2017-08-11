@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Users>
+  <User>
+  <UserId>1</UserId>
+  <UserName>Test</UserName>
+  <Password>testuser</Password>
+  <FirstName>Test</FirstName>
+  <LastName>User</LastName>
+  <Email>testuser@senonder.com</Email>
+</User>
+</Users>

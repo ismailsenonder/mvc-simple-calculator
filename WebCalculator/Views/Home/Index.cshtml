@@ -1,0 +1,82 @@
+﻿@using WebCalculator.Models
+@model MainViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript" src="@Url.Content("~/Content/jquery-3.2.0.min.js")"></script>
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Web Calculator</title>
+</head>
+<body>
+    <div class="container" style="max-width:450px; padding:20px;">
+        <div class="row">
+            <div style="padding-bottom:20px;">
+                <div class="wctitle">
+                    Welcome, @Model.UserInfo.FirstName @Model.UserInfo.LastName @Html.ActionLink("--Log out--", "Logout", "User", null, new { style = "font-size:9pt" })
+                </div>
+                <div>This is a web based simple calculator. It has the ability to add, subtract, multiply and divide values. Enjoy! </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group input-group">
+                @Html.TextBoxFor(m => m.CalculatorInfo.FirstValue, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.CalculatorInfo.FirstValue), type = "number", step = "any" })
+            </div>
+            <div class="form-group input-group">
+                @Html.TextBoxFor(m => m.CalculatorInfo.SecondValue, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.CalculatorInfo.SecondValue), type = "number", step = "any" })
+            </div>
+        </div>
+        <div class="row" style="font-size:36px;">
+            <button type="button" id="details" style="width:20%" onclick="calculate(1);">&#43;</button>&nbsp;
+            <button type="button" id="details" style="width:20%" onclick="calculate(2);">&#45;</button>&nbsp;
+            <button type="button" id="details" style="width:20%" onclick="calculate(3);">&#88;</button>&nbsp;
+            <button type="button" id="details" style="width:20%" onclick="calculate(4);">&#247;</button>
+        </div>
+        <div class="row">
+            <div class="wctitle" style="padding-top:20px;">
+                <div class="alert alert-danger" id="alertdiv" style="display:none;"></div>
+                Your Result: <label id="resultLabel"></label>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    function calculate(sign) {
+        $("#alertdiv").empty();
+        $("#alertdiv").hide();
+        var requrl = '@Url.Action("Calculate", "Home")';
+        var value1 = document.getElementById('@Html.IdFor(m=>m.CalculatorInfo.FirstValue)').value;
+        var value2 = document.getElementById('@Html.IdFor(m=>m.CalculatorInfo.SecondValue)').value;
+
+        $.ajax({
+            type: "POST",
+            url: requrl,
+            data: JSON.stringify({ 'firstValue': value1, 'secondValue': value2, 'sign': sign }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $("#resultLabel").text(data.result);
+                if (data.message != null) {
+                    $("#alertdiv").append(data.message);
+                    $("#alertdiv").show();
+                }
+            },
+            fail: function () {
+                if (data.message != null) {
+                    $("#alertdiv").append(data.message);
+                    $("#alertdiv").show();
+                }
+            }
+
+        });
+    }
+</script>
